@@ -1,4 +1,4 @@
-jongo-mappers
+jongo-extras
 =============
 
 Alternative implementations for Jongo's Mapper
