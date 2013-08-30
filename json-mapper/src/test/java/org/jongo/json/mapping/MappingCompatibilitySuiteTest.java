@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jongo.json;
+package org.jongo.json.mapping;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jongo.marshall.jackson.configuration.Mapping;
@@ -27,7 +27,7 @@ import org.junit.runner.RunWith;
 import static org.junit.runners.Parameterized.Parameters;
 
 @RunWith(CompatibilitySuite.class)
-public class JsonCompatibilitySuiteTest {
+public class MappingCompatibilitySuiteTest {
 
     @Parameters
     public static TestContext context() {

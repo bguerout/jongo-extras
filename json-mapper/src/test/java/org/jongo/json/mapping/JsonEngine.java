@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jongo.json;
+package org.jongo.json.mapping;
 
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;

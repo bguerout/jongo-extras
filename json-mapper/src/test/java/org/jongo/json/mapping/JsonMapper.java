@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jongo.json;
+package org.jongo.json.mapping;
 
 import org.jongo.Mapper;
 import org.jongo.ObjectIdUpdater;
@@ -26,7 +26,7 @@ import org.jongo.marshall.jackson.configuration.Mapping;
 import org.jongo.query.JsonQueryFactory;
 import org.jongo.query.QueryFactory;
 
-class JsonMapper implements Mapper {
+public class JsonMapper implements Mapper {
 
     private final JsonEngine engine;
 
