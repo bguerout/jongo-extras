@@ -49,7 +49,7 @@ class JsonEngine implements Unmarshaller, Marshaller {
     public BsonDocument marshall(Object pojo) throws MarshallingException {
         try {
             Writer writer = new StringWriter();
-            config.getWriter(pojo.getClass()).writeValue(writer, pojo);
+            config.getWriter(pojo).writeValue(writer, pojo);
             DBObject dbObject = createDBObjectWithDriver(writer.toString());
             return Bson.createDocument(dbObject);
         } catch (Exception e) {
