@@ -14,13 +14,12 @@
  * limitations under the License.
  */
 
-package org.jongo.json.query;
+package org.jongo.json;
 
-import org.jongo.Mapper;
-import org.jongo.json.mapping.JsonMapper;
-import org.jongo.marshall.jackson.JacksonEngine;
-import org.jongo.marshall.jackson.JacksonMapper;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jongo.marshall.jackson.configuration.Mapping;
+import org.jongo.marshall.jackson.configuration.PropertyModifier;
+import org.jongo.marshall.jackson.configuration.VisibilityModifier;
 import org.jongo.util.compatibility.CompatibilitySuite;
 import org.jongo.util.compatibility.TestContext;
 import org.junit.runner.RunWith;
@@ -28,16 +27,17 @@ import org.junit.runner.RunWith;
 import static org.junit.runners.Parameterized.Parameters;
 
 @RunWith(CompatibilitySuite.class)
-public class QueryCompatibilitySuiteTest {
+public class JsonMapperCompatibilitySuiteTest {
 
     @Parameters
     public static TestContext context() {
-        JacksonEngine jacksonEngine = new JacksonEngine(Mapping.defaultMapping());
-        Mapper mapper = new JacksonMapper.Builder()
-                .withQueryFactory(new JsonQueryFactory(jacksonEngine))
+        Mapping config = new Mapping.Builder(new ObjectMapper())
+                .registerModule(new JsonModule())
+                .addModifier(new PropertyModifier())
+                .addModifier(new VisibilityModifier())
                 .build();
 
-        return new TestContext("JsonProvider", mapper);
+        return new TestContext("JsonProvider", new JsonMapper(config));
     }
 
 }

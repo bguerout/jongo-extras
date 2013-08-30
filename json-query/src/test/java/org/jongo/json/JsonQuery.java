@@ -1,4 +1,4 @@
-package org.jongo.json.query;
+package org.jongo.json;
 
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;

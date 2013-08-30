@@ -13,6 +13,7 @@
 
     <modules>
         <module>json-mapper</module>
+        <module>json-query</module>
     </modules>
 
     <build>

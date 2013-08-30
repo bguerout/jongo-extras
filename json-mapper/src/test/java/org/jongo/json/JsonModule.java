@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.jongo.json.mapping;
+package org.jongo.json;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
