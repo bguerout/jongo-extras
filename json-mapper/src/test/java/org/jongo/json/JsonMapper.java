@@ -23,7 +23,7 @@ import org.jongo.marshall.Marshaller;
 import org.jongo.marshall.Unmarshaller;
 import org.jongo.marshall.jackson.JacksonIdFieldSelector;
 import org.jongo.marshall.jackson.configuration.Mapping;
-import org.jongo.query.JsonQueryFactory;
+import org.jongo.query.BsonQueryFactory;
 import org.jongo.query.QueryFactory;
 
 public class JsonMapper implements Mapper {
@@ -47,6 +47,6 @@ public class JsonMapper implements Mapper {
     }
 
     public QueryFactory getQueryFactory() {
-        return new JsonQueryFactory(engine);
+        return new BsonQueryFactory(engine);
     }
 }
