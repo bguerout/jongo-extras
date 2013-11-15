@@ -17,12 +17,17 @@
 package org.jongo.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jongo.BinaryTest;
+import org.jongo.NonPojoTest;
 import org.jongo.marshall.jackson.configuration.Mapping;
 import org.jongo.marshall.jackson.configuration.PropertyModifier;
 import org.jongo.marshall.jackson.configuration.VisibilityModifier;
 import org.jongo.util.compatibility.CompatibilitySuite;
 import org.jongo.util.compatibility.TestContext;
 import org.junit.runner.RunWith;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.runners.Parameterized.Parameters;
 
@@ -37,7 +42,11 @@ public class JsonMapperCompatibilitySuiteTest {
                 .addModifier(new VisibilityModifier())
                 .build();
 
-        return new TestContext("JsonProvider", new JsonMapper(config));
+        List<Class<?>> ignoredTests = new ArrayList<Class<?>>();
+        ignoredTests.add(BinaryTest.class);
+        ignoredTests.add(NonPojoTest.class);
+
+        return new TestContext("JsonProvider", new JsonMapper(config), ignoredTests);
     }
 
 }

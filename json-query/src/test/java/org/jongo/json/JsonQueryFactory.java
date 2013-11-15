@@ -19,6 +19,9 @@ package org.jongo.json;
 import com.mongodb.BasicDBList;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
+import com.mongodb.util.JSONSerializers;
+import com.mongodb.util.ObjectSerializer;
+import org.bson.BSONObject;
 import org.jongo.bson.Bson;
 import org.jongo.marshall.Marshaller;
 import org.jongo.marshall.MarshallingException;
@@ -35,6 +38,7 @@ public class JsonQueryFactory implements QueryFactory {
     private final String token;
     private final Marshaller marshaller;
     private final Pattern pattern;
+    private final ObjectSerializer serializer = JSONSerializers.getStrict();
 
     public JsonQueryFactory(Marshaller marshaller) {
         this(marshaller, DEFAULT_TOKEN);
@@ -71,7 +75,13 @@ public class JsonQueryFactory implements QueryFactory {
 
             String replacement;
             try {
-                replacement = marshallParameter(parameter, true).toString();
+                Object object = marshallParameter(parameter, true);
+                if(object instanceof BSONObject) {
+                    replacement = serializer.serialize(object);
+                } else {
+                    replacement = object.toString();
+                }
+
             } catch (RuntimeException e) {
                 String message = String.format("Unable to bind parameter: %s into query: %s", parameter, query);
                 throw new IllegalArgumentException(message, e);
@@ -87,11 +97,11 @@ public class JsonQueryFactory implements QueryFactory {
     private Object marshallParameter(Object parameter, boolean serializeBsonPrimitives) {
         try {
             if (parameter == null || Bson.isPrimitive(parameter)) {
-                return serializeBsonPrimitives ? JSON.serialize(parameter) : parameter;
+                return serializeBsonPrimitives ? serializer.serialize(parameter) : parameter;
             }
             if (parameter instanceof Enum) {
                 String name = ((Enum) parameter).name();
-                return serializeBsonPrimitives ? JSON.serialize(name) : name;
+                return serializeBsonPrimitives ? serializer.serialize(name) : name;
             }
             if (parameter instanceof List) {
                 return marshallArray(((List) parameter).toArray());
