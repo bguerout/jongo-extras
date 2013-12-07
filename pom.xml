@@ -9,12 +9,13 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jongo.version>1.0-SNAPSHOT</jongo.version>
+        <jongo.version>1.1-SNAPSHOT</jongo.version>
     </properties>
 
     <modules>
         <module>json-mapper</module>
         <module>json-query</module>
+        <module>osgi</module>
     </modules>
 
     <build>
