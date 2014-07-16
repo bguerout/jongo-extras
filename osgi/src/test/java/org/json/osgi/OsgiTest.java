@@ -32,10 +32,10 @@ public class OsgiTest {
 
         return new Option[]{
                 mavenBundle("org.jongo", "jongo", System.getProperty("jongo.version")),
-                mavenBundle("com.fasterxml.jackson.core", "jackson-core", "2.3.0"),
-                mavenBundle("com.fasterxml.jackson.core", "jackson-databind", "2.3.0"),
-                mavenBundle("com.fasterxml.jackson.core", "jackson-annotations", "2.3.0"),
-                mavenBundle("de.undercouch", "bson4jackson", "2.3.0"),
+                mavenBundle("com.fasterxml.jackson.core", "jackson-core", "2.4.1"),
+                mavenBundle("com.fasterxml.jackson.core", "jackson-databind", "2.4.1"),
+                mavenBundle("com.fasterxml.jackson.core", "jackson-annotations", "2.4.1"),
+                mavenBundle("de.undercouch", "bson4jackson", "2.4.0"),
                 mavenBundle("org.mongodb", "mongo-java-driver", "2.11.0"),
                 junitBundles()
         };
