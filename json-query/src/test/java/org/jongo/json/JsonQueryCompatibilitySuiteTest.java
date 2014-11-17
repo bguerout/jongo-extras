@@ -19,12 +19,14 @@ package org.jongo.json;
 import org.jongo.Mapper;
 import org.jongo.marshall.jackson.JacksonEngine;
 import org.jongo.marshall.jackson.JacksonMapper;
+import org.jongo.marshall.jackson.ParameterBindingWithJacksonTest;
 import org.jongo.marshall.jackson.configuration.Mapping;
 import org.jongo.util.compatibility.CompatibilitySuite;
 import org.jongo.util.compatibility.TestContext;
 import org.junit.runner.RunWith;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.runners.Parameterized.Parameters;
 
@@ -38,7 +40,10 @@ public class JsonQueryCompatibilitySuiteTest {
                 .withQueryFactory(new JsonQueryFactory(jacksonEngine))
                 .build();
 
-        return new TestContext("JsonProvider", mapper, new ArrayList<Class<?>>());
+        List<Class<?>> ignoredTests = new ArrayList<Class<?>>();
+        ignoredTests.add(ParameterBindingWithJacksonTest.class);
+
+        return new TestContext("JsonProvider", mapper, ignoredTests);
     }
 
 }
