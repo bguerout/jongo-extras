@@ -10,6 +10,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jongo.version>1.2-SNAPSHOT</jongo.version>
+        <mongo.version>2.12.3</mongo.version>
     </properties>
 
     <modules>
@@ -46,7 +47,7 @@
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
-            <version>2.12.3</version>
+            <version>${mongo.version}</version>
         </dependency>
 
         <!-- TEST -->

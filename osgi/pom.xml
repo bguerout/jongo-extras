@@ -42,6 +42,7 @@
                 <configuration>
                     <systemPropertyVariables>
                         <jongo.version>${jongo.version}</jongo.version>
+                        <mongo.version>${mongo.version}</mongo.version>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>

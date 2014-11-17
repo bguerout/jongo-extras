@@ -28,7 +28,8 @@ public class OsgiTest {
     @Configuration
     public Option[] config() {
         System.setProperty("org.ops4j.pax.url.mvn.repositories",
-                "https://oss.sonatype.org/content/repositories/snapshots@snapshots@id=sonatype-nexus-snapshots,http://repo1.maven.org/maven2@id=central");
+                "https://oss.sonatype.org/content/repositories/snapshots@snapshots@id=sonatype-nexus-snapshots," +
+                        "http://repo1.maven.org/maven2@id=central");
 
         return new Option[]{
                 mavenBundle("org.jongo", "jongo", System.getProperty("jongo.version")),
@@ -36,7 +37,7 @@ public class OsgiTest {
                 mavenBundle("com.fasterxml.jackson.core", "jackson-databind", "2.4.1"),
                 mavenBundle("com.fasterxml.jackson.core", "jackson-annotations", "2.4.1"),
                 mavenBundle("de.undercouch", "bson4jackson", "2.4.0"),
-                mavenBundle("org.mongodb", "mongo-java-driver", "2.11.0"),
+                mavenBundle("org.mongodb", "mongo-java-driver", System.getProperty("mongo.version")),
                 junitBundles()
         };
     }
