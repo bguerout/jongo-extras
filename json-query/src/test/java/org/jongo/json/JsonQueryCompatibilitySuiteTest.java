@@ -25,9 +25,6 @@ import org.jongo.util.compatibility.CompatibilitySuite;
 import org.jongo.util.compatibility.TestContext;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.runners.Parameterized.Parameters;
 
 @RunWith(CompatibilitySuite.class)
@@ -40,10 +37,9 @@ public class JsonQueryCompatibilitySuiteTest {
                 .withQueryFactory(new JsonQueryFactory(jacksonEngine))
                 .build();
 
-        List<Class<?>> ignoredTests = new ArrayList<Class<?>>();
-        ignoredTests.add(ParameterBindingWithJacksonTest.class);
-
-        return new TestContext("JsonProvider", mapper, ignoredTests);
+        TestContext context = new TestContext("JsonQuery", mapper);
+        context.ignoreTestCase(ParameterBindingWithJacksonTest.class);
+        return context;
     }
 
 }

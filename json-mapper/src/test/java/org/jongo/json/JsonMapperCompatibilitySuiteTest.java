@@ -17,6 +17,7 @@
 package org.jongo.json;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.jongo.AnnotationsMisusedTest;
 import org.jongo.BinaryTest;
 import org.jongo.NonPojoTest;
 import org.jongo.marshall.jackson.configuration.Mapping;
@@ -26,9 +27,6 @@ import org.jongo.util.compatibility.CompatibilitySuite;
 import org.jongo.util.compatibility.TestContext;
 import org.junit.runner.RunWith;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.junit.runners.Parameterized.Parameters;
 
 @RunWith(CompatibilitySuite.class)
@@ -36,17 +34,19 @@ public class JsonMapperCompatibilitySuiteTest {
 
     @Parameters
     public static TestContext context() {
+
         Mapping config = new Mapping.Builder(new ObjectMapper())
                 .registerModule(new JsonModule())
                 .addModifier(new PropertyModifier())
                 .addModifier(new VisibilityModifier())
                 .build();
 
-        List<Class<?>> ignoredTests = new ArrayList<Class<?>>();
-        ignoredTests.add(BinaryTest.class);
-        ignoredTests.add(NonPojoTest.class);
+        TestContext context = new TestContext("JsonMapper", new JsonMapper(config));
+        context.ignoreTestCase(BinaryTest.class);
+        context.ignoreTestCase(NonPojoTest.class);
+        context.ignoreTest(AnnotationsMisusedTest.class, "savingAPojoWithAnEmptyStringCustomId");
 
-        return new TestContext("JsonProvider", new JsonMapper(config), ignoredTests);
+        return context;
     }
 
 }
