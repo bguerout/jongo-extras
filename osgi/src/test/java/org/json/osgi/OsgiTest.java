@@ -32,7 +32,7 @@ public class OsgiTest {
                         "http://repo1.maven.org/maven2@id=central");
 
         String jacksonVersion = "2.6.2";
-        String bson4Jackson = "2.7.0";
+        String bson4Jackson = "2.6.0";
         return new Option[]{
                 mavenBundle("org.jongo", "jongo", System.getProperty("jongo.version")),
                 mavenBundle("com.fasterxml.jackson.core", "jackson-core", jacksonVersion),
