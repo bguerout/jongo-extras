@@ -16,13 +16,12 @@
 
 package org.jongo.json;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.Version;
+import com.fasterxml.jackson.core.*;
 import com.fasterxml.jackson.databind.*;
 import com.fasterxml.jackson.databind.module.SimpleDeserializers;
 import com.fasterxml.jackson.databind.module.SimpleSerializers;
+import com.fasterxml.jackson.databind.node.POJONode;
+import com.fasterxml.jackson.databind.node.ValueNode;
 import com.mongodb.DBObject;
 import com.mongodb.util.JSON;
 import org.bson.types.BSONTimestamp;
@@ -56,7 +55,7 @@ public class JsonModule extends Module {
     private static class JsonDeserializers extends SimpleDeserializers {
         public JsonDeserializers() {
             NativeDeserializer deserializer = new NativeDeserializer();
-            addDeserializer(ObjectId.class, deserializer);
+            addDeserializer(ObjectId.class, new ObjectIdDeserializer());
             addDeserializer(Date.class, new BackwardDateDeserializer(deserializer));
             addDeserializer(UUID.class, deserializer);
             addDeserializer(Pattern.class, deserializer);
@@ -92,6 +91,26 @@ public class JsonModule extends Module {
         public T deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
             String asString = jp.readValueAsTree().toString();
             return (T) JSON.parse(asString);
+        }
+    }
+
+    private static class ObjectIdDeserializer extends JsonDeserializer<ObjectId> {
+
+        @Override
+        public ObjectId deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException {
+            TreeNode tree = jp.getCodec().readTree(jp);
+            if (tree.isObject()) {
+                TreeNode node = tree;
+                if (tree.get("_id") != null) {
+                    node = tree.get("_id");
+                }
+                String hexString = ((ValueNode) node.get("$oid")).asText();
+                return new ObjectId(hexString);
+            } else if (tree instanceof POJONode) {
+                return (ObjectId) ((POJONode) tree).getPojo();
+            } else {
+                throw ctxt.mappingException(ObjectId.class);
+            }
         }
     }
 
