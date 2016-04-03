@@ -41,7 +41,7 @@
                 <version>2.15</version>
                 <configuration>
                     <systemPropertyVariables>
-                        <jongo.version>${jongo.version}</jongo.version>
+                        <jongo.version>${jongo.dev.version}</jongo.version>
                         <mongo.version>${mongo.version}</mongo.version>
                     </systemPropertyVariables>
                 </configuration>
