@@ -17,7 +17,10 @@
 package org.jongo.json;
 
 import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
 import com.mongodb.util.JSON;
+import org.bson.BsonDocumentWrapper;
+import org.bson.conversions.Bson;
 import org.jongo.query.Query;
 
 class JsonQuery implements Query {
@@ -38,6 +41,11 @@ class JsonQuery implements Query {
 
     public DBObject toDBObject() {
         return dbo;
+    }
+
+    @Override
+    public Bson toBson() {
+        return BsonDocumentWrapper.asBsonDocument(dbo, MongoClient.getDefaultCodecRegistry());
     }
 
     @Override
