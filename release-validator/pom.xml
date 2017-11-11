@@ -34,6 +34,13 @@
             <artifactId>jongo</artifactId>
             <version>${jongo.release.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.jongo</groupId>
+            <artifactId>jongo</artifactId>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+            <version>${jongo.release.version}</version>
+        </dependency>
     </dependencies>
 
 
