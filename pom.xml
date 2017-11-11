@@ -19,6 +19,7 @@
         <module>json-query</module>
         <module>osgi</module>
         <module>release-validator</module>
+        <module>javax-persistence</module>
     </modules>
 
     <build>
