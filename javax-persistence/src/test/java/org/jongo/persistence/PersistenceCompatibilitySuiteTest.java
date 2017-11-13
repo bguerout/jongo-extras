@@ -16,12 +16,13 @@
 
 package org.jongo.persistence;
 
+import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.introspect.AnnotationIntrospectorPair;
 import org.jongo.Mapper;
 import org.jongo.ObjectIdUpdater;
 import org.jongo.marshall.jackson.JacksonMapper;
-import org.jongo.marshall.jackson.configuration.AnnotationModifier;
-import org.jongo.util.NewAnnotationModifier;
+import org.jongo.marshall.jackson.configuration.MapperModifier;
 import org.jongo.util.compatibility.CompatibilitySuite;
 import org.jongo.util.compatibility.TestContext;
 import org.junit.runner.RunWith;
@@ -36,13 +37,23 @@ public class PersistenceCompatibilitySuiteTest {
 
         ObjectMapper objectMapper = JacksonMapper.Builder.defaultObjectMapper();
         ObjectIdUpdater objectIdUpdater = new PersistenceObjectIdUpdater(objectMapper);
+        MapperModifier addPersistenceAnnotationModifier = new AddPersistenceAnnotationModifier();
 
         Mapper mapper = new JacksonMapper.Builder(objectMapper)
-                .addModifier(new AnnotationModifier(new PersistenceAnnotationIntrospector()))
+                .addModifier(addPersistenceAnnotationModifier)
                 .withObjectIdUpdater(objectIdUpdater)
                 .build();
 
         return new TestContext("PersistenceMapper", mapper);
     }
 
+    private static class AddPersistenceAnnotationModifier implements MapperModifier {
+        @Override
+        public void modify(ObjectMapper mapper) {
+            AnnotationIntrospector introspector = new PersistenceAnnotationIntrospector();
+            AnnotationIntrospector jacksonIntrospector = mapper.getSerializationConfig().getAnnotationIntrospector();
+
+            mapper.setAnnotationIntrospector(new AnnotationIntrospectorPair(introspector, jacksonIntrospector));
+        }
+    }
 }

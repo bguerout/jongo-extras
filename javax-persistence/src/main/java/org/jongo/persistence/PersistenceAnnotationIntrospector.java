@@ -16,38 +16,19 @@
 
 package org.jongo.persistence;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.PropertyName;
 import com.fasterxml.jackson.databind.introspect.Annotated;
 import org.jongo.marshall.jackson.JongoAnnotationIntrospector;
-import org.jongo.marshall.jackson.oid.ObjectIdDeserializer;
-import org.jongo.marshall.jackson.oid.ObjectIdSerializer;
 
 @SuppressWarnings("deprecation")
 public class PersistenceAnnotationIntrospector extends JongoAnnotationIntrospector {
 
     @Override
-    public Include findSerializationInclusion(Annotated a, Include defValue) {
-        return a.hasAnnotation(javax.persistence.Id.class) ? Include.NON_NULL : super.findSerializationInclusion(a, defValue);
+    protected boolean hasIdAnnotation(Annotated a) {
+        return a.hasAnnotation(javax.persistence.Id.class) || super.hasIdAnnotation(a);
     }
 
     @Override
-    public Object findSerializer(Annotated a) {
-        return a.hasAnnotation(javax.persistence.Id.class) ? ObjectIdSerializer.class : super.findSerializer(a);
-    }
-
-    @Override
-    public Object findDeserializer(Annotated a) {
-        return a.hasAnnotation(javax.persistence.Id.class) ? ObjectIdDeserializer.class : super.findDeserializer(a);
-    }
-
-    @Override
-    public PropertyName findNameForSerialization(Annotated a) {
-        return a.hasAnnotation(javax.persistence.Id.class) ? new PropertyName("_id") : super.findNameForSerialization(a);
-    }
-
-    @Override
-    public PropertyName findNameForDeserialization(Annotated a) {
-        return a.hasAnnotation(javax.persistence.Id.class) ? new PropertyName("_id") : super.findNameForDeserialization(a);
+    protected boolean hasObjectIdAnnotation(Annotated a) {
+        return a.hasAnnotation(javax.persistence.Id.class) || super.hasObjectIdAnnotation(a);
     }
 }
