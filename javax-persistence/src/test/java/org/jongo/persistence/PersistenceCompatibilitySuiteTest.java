@@ -22,6 +22,8 @@ import com.fasterxml.jackson.databind.introspect.AnnotationIntrospectorPair;
 import org.jongo.Mapper;
 import org.jongo.ObjectIdUpdater;
 import org.jongo.marshall.jackson.JacksonMapper;
+import org.jongo.marshall.jackson.JacksonObjectIdUpdater;
+import org.jongo.marshall.jackson.JongoAnnotationIntrospector;
 import org.jongo.marshall.jackson.configuration.MapperModifier;
 import org.jongo.util.compatibility.CompatibilitySuite;
 import org.jongo.util.compatibility.TestContext;
@@ -36,7 +38,7 @@ public class PersistenceCompatibilitySuiteTest {
     public static TestContext context() {
 
         ObjectMapper objectMapper = JacksonMapper.Builder.defaultObjectMapper();
-        ObjectIdUpdater objectIdUpdater = new PersistenceObjectIdUpdater(objectMapper);
+        ObjectIdUpdater objectIdUpdater = new JacksonObjectIdUpdater(objectMapper, new PersistenceBeanPropertySelector());
         MapperModifier addPersistenceAnnotationModifier = new AddPersistenceAnnotationModifier();
 
         Mapper mapper = new JacksonMapper.Builder(objectMapper)
@@ -50,7 +52,7 @@ public class PersistenceCompatibilitySuiteTest {
     private static class AddPersistenceAnnotationModifier implements MapperModifier {
         @Override
         public void modify(ObjectMapper mapper) {
-            AnnotationIntrospector introspector = new PersistenceAnnotationIntrospector();
+            AnnotationIntrospector introspector = new JongoAnnotationIntrospector(new PersistenceAnnotatedIdSelector());
             AnnotationIntrospector jacksonIntrospector = mapper.getSerializationConfig().getAnnotationIntrospector();
 
             mapper.setAnnotationIntrospector(new AnnotationIntrospectorPair(introspector, jacksonIntrospector));
