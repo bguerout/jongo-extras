@@ -1,9 +1,9 @@
 package org.jongo.persistence;
 
 import com.fasterxml.jackson.databind.introspect.BeanPropertyDefinition;
-import org.jongo.marshall.jackson.BeanPropertyDefinitionIdSelector;
+import org.jongo.marshall.jackson.JacksonObjectIdSelector;
 
-public class PersistenceBeanPropertySelector extends BeanPropertyDefinitionIdSelector {
+public class PersistenceObjectIdSelector extends JacksonObjectIdSelector {
 
     @Override
     public boolean isId(BeanPropertyDefinition property) {

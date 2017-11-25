@@ -1,9 +1,9 @@
 package org.jongo.persistence;
 
 import com.fasterxml.jackson.databind.introspect.Annotated;
-import org.jongo.marshall.jackson.AnnotatedIdSelector;
+import org.jongo.marshall.jackson.JongoAnnotationIdSelector;
 
-public class PersistenceAnnotatedIdSelector extends AnnotatedIdSelector {
+public class PersistenceAnnotationIdSelector extends JongoAnnotationIdSelector {
 
     @Override
     public boolean isId(Annotated a) {
