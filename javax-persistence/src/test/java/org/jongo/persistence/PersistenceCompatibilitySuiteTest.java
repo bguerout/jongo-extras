@@ -39,7 +39,7 @@ public class PersistenceCompatibilitySuiteTest {
 
         ObjectMapper objectMapper = JacksonMapper.Builder.defaultObjectMapper();
         ObjectIdUpdater objectIdUpdater = new JacksonObjectIdUpdater(objectMapper, new PersistenceObjectIdSelector());
-        MapperModifier addPersistenceAnnotationModifier = new AddPersistenceAnnotationModifier();
+        MapperModifier addPersistenceAnnotationModifier = new PersistenceAnnotationModifier();
 
         Mapper mapper = new JacksonMapper.Builder(objectMapper)
                 .addModifier(addPersistenceAnnotationModifier)
@@ -49,7 +49,7 @@ public class PersistenceCompatibilitySuiteTest {
         return new TestContext("PersistenceMapper", mapper);
     }
 
-    private static class AddPersistenceAnnotationModifier implements MapperModifier {
+    private static class PersistenceAnnotationModifier implements MapperModifier {
         @Override
         public void modify(ObjectMapper mapper) {
             AnnotationIntrospector introspector = new JongoAnnotationIntrospector(new PersistenceAnnotationIdSelector());
