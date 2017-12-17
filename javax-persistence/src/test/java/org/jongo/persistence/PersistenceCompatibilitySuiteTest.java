@@ -20,11 +20,11 @@ import com.fasterxml.jackson.databind.AnnotationIntrospector;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.introspect.AnnotationIntrospectorPair;
 import org.jongo.Mapper;
-import org.jongo.ObjectIdUpdater;
 import org.jongo.marshall.jackson.JacksonMapper;
 import org.jongo.marshall.jackson.JacksonObjectIdUpdater;
 import org.jongo.marshall.jackson.JongoAnnotationIntrospector;
 import org.jongo.marshall.jackson.configuration.MapperModifier;
+import org.jongo.marshall.jackson.configuration.Mapping;
 import org.jongo.util.compatibility.CompatibilitySuite;
 import org.jongo.util.compatibility.TestContext;
 import org.junit.runner.RunWith;
@@ -37,13 +37,14 @@ public class PersistenceCompatibilitySuiteTest {
     @Parameters
     public static TestContext context() {
 
-        ObjectMapper objectMapper = JacksonMapper.Builder.defaultObjectMapper();
-        ObjectIdUpdater objectIdUpdater = new JacksonObjectIdUpdater(objectMapper, new PersistenceObjectIdSelector());
-        MapperModifier addPersistenceAnnotationModifier = new PersistenceAnnotationModifier();
+        Mapping mapping = new Mapping.Builder()
+                .addModifier(new PersistenceAnnotationModifier())
+                .build();
+
+        ObjectMapper objectMapper = mapping.getObjectMapper();
 
         Mapper mapper = new JacksonMapper.Builder(objectMapper)
-                .addModifier(addPersistenceAnnotationModifier)
-                .withObjectIdUpdater(objectIdUpdater)
+                .withObjectIdUpdater(new JacksonObjectIdUpdater(objectMapper, new PersistenceObjectIdSelector()))
                 .build();
 
         return new TestContext("PersistenceMapper", mapper);
