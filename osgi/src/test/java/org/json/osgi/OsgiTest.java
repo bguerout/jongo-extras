@@ -31,7 +31,7 @@ public class OsgiTest {
                 "https://oss.sonatype.org/content/repositories/snapshots@snapshots@id=sonatype-nexus-snapshots," +
                         "http://repo1.maven.org/maven2@id=central");
 
-        String jacksonVersion = "2.7.3";
+        String jacksonVersion = "2.8.10";
         String bson4Jackson = "2.7.0";
         return new Option[]{
                 mavenBundle("org.jongo", "jongo", System.getProperty("jongo.version")),
