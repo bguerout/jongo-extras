@@ -1,6 +1,11 @@
 machine:
   services:
     - docker
+
+dependencies:
+  override:
+    - docker build -t jongo-extras-ci .
+
 test:
   override:
-    - docker run -it -v $(pwd):/root/sources -w /root/sources maven:3.3.3-jdk-8 mvn clean verify
+    - docker run -it -w /root/sources jongo-extras-ci mvn clean verify
