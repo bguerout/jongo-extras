@@ -1,11 +1,46 @@
-machine:
-  services:
-    - docker
+version: 2
+jobs:
+  json-mapper:
+    machine: true
+    steps:
+      - checkout
+      - run: docker build -t jongo-extras-ci /home/circleci/project
+      - run: mvn clean verify -f json-mapper
 
-dependencies:
-  override:
-    - docker build -t jongo-extras-ci .
+  json-query:
+      machine: true
+      steps:
+        - checkout
+        - run: docker build -t jongo-extras-ci /home/circleci/project
+        - run: mvn clean verify -f json-query
 
-test:
-  override:
-    - docker run -it -w /root/sources jongo-extras-ci mvn clean verify
+  osgi:
+      machine: true
+      steps:
+        - checkout
+        - run: docker build -t jongo-extras-ci /home/circleci/project
+        - run: mvn clean verify -f osgi
+
+  release-validator:
+      machine: true
+      steps:
+        - checkout
+        - run: docker build -t jongo-extras-ci /home/circleci/project
+        - run: mvn clean verify -f release-validator
+
+  javax-persistence:
+        machine: true
+        steps:
+          - checkout
+          - run: docker build -t jongo-extras-ci /home/circleci/project
+          - run: mvn clean verify -f javax-persistence
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - json-mapper
+      - json-query
+      - osgi
+      - release-validator
+      - javax-persistence
