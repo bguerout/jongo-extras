@@ -10,7 +10,6 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <jongo.dev.version>1.4.0-SNAPSHOT</jongo.dev.version>
-        <jongo.release.version>1.3.0</jongo.release.version>
         <mongo.version>3.5.0</mongo.version>
     </properties>
 
