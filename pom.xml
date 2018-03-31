@@ -9,7 +9,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <jongo.dev.version>1.4.0-SNAPSHOT</jongo.dev.version>
+        <jongo.version>1.5.0-SNAPSHOT</jongo.version>
         <mongo.version>3.5.0</mongo.version>
     </properties>
 
@@ -44,7 +44,7 @@
         <dependency>
             <groupId>org.jongo</groupId>
             <artifactId>jongo</artifactId>
-            <version>${jongo.dev.version}</version>
+            <version>${jongo.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mongodb</groupId>
@@ -58,7 +58,7 @@
             <artifactId>jongo</artifactId>
             <classifier>tests</classifier>
             <scope>test</scope>
-            <version>${jongo.dev.version}</version>
+            <version>${jongo.version}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>

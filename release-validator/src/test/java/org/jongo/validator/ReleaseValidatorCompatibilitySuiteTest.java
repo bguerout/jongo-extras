@@ -34,7 +34,6 @@ public class ReleaseValidatorCompatibilitySuiteTest {
     public static TestContext context() {
         Mapper mapper = new JacksonMapper.Builder().build();
         TestContext context = new TestContext("ReleaseValidator", mapper);
-        context.ignoreTestCase(ParameterBindingWithJacksonTest.class);
         return context;
     }
 
