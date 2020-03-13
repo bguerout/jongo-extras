@@ -16,7 +16,9 @@
 
 package org.jongo.persistence;
 
+import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoCollection;
+import org.bson.conversions.Bson;
 import org.bson.types.ObjectId;
 import org.jongo.Jongo;
 import org.jongo.Mapper;
@@ -31,15 +33,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class PersistenceNativeTest extends NativeTestBase {
 
-    private MongoCollection<Friend> collection;
+    public PersistenceNativeTest() {
+        super(PersistenceCompatibilitySuiteTest.context().getMapper());
+    }
+
+    private MongoCollection<PersistenceFriend> collection;
 
     @Before
     public void setUp() throws Exception {
-
-        Mapper mapper = PersistenceCompatibilitySuiteTest.context().getMapper();
-
-        jongo = Jongo.useNative(mapper);
-        collection = jongo.wrap(database.getCollection("friends", Friend.class));
+        collection = jongo.getCollection("friends", PersistenceFriend.class);
     }
 
     @After
