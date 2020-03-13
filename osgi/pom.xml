@@ -29,8 +29,10 @@
     <packaging>jar</packaging>
 
     <properties>
-        <exam.version>4.4.0</exam.version>
-        <url.version>1.5.2</url.version>
+        <pax-exam.version>4.13.2</pax-exam.version>
+        <pax-url-aether.version>1.6.0</pax-url-aether.version>
+        <jackson.version>2.10.3</jackson.version>
+        <bson4jackson.version>2.9.2</bson4jackson.version>
     </properties>
 
     <build>
@@ -42,7 +44,9 @@
                 <configuration>
                     <systemPropertyVariables>
                         <jongo.version>${jongo.version}</jongo.version>
-                        <mongo.version>${mongo.version}</mongo.version>
+                        <mongo-java-driver.version>${mongo-java-driver.version}</mongo-java-driver.version>
+                        <jackson.version>${jackson.version}</jackson.version>
+                        <bson4jackson.version>${bson4jackson.version}</bson4jackson.version>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>
@@ -54,35 +58,42 @@
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
             <artifactId>pax-exam-container-forked</artifactId>
-            <version>${exam.version}</version>
+            <version>${pax-exam.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
             <artifactId>pax-exam-junit4</artifactId>
-            <version>${exam.version}</version>
+            <version>${pax-exam.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.ops4j.pax.exam</groupId>
             <artifactId>pax-exam-link-mvn</artifactId>
-            <version>${exam.version}</version>
+            <version>${pax-exam.version}</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.ops4j.pax.url</groupId>
             <artifactId>pax-url-aether</artifactId>
-            <version>${url.version}</version>
+            <version>${pax-url-aether.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.inject</groupId>
+            <artifactId>javax.inject</artifactId>
+            <version>1</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.apache.felix</groupId>
             <artifactId>org.apache.felix.framework</artifactId>
-            <version>4.4.1</version>
+            <version>6.0.3</version>
             <scope>test</scope>
         </dependency>
 

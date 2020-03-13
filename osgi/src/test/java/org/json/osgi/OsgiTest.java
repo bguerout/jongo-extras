@@ -27,19 +27,23 @@ public class OsgiTest {
 
     @Configuration
     public Option[] config() {
+        System.setProperty("org.ops4j.pax.url.mvn.defaultLocalRepoAsRemote", "true");
         System.setProperty("org.ops4j.pax.url.mvn.repositories",
-                "https://oss.sonatype.org/content/repositories/snapshots@snapshots@id=sonatype-nexus-snapshots," +
-                        "http://repo1.maven.org/maven2@id=central");
+                "https://oss.sonatype.org/content/repositories/snapshots@snapshots@id=sonatype-snapshots," +
+                        "https://repo1.maven.org/maven2@id=central");
 
-        String jacksonVersion = "2.9.5";
-        String bson4Jackson = "2.9.0";
+        String jongoVersion = System.getProperty("jongo.version");
+        String jacksonVersion = System.getProperty("jackson.version");
+        String bson4JacksonVersion = System.getProperty("bson4jackson.version");
+        String mongodbJavaDriverVersion = System.getProperty("mongo-java-driver.version");
+
         return new Option[]{
-                mavenBundle("org.jongo", "jongo", System.getProperty("jongo.version")),
+                mavenBundle("org.jongo", "jongo", jongoVersion),
+                mavenBundle("org.mongodb", "mongo-java-driver", mongodbJavaDriverVersion),
                 mavenBundle("com.fasterxml.jackson.core", "jackson-core", jacksonVersion),
                 mavenBundle("com.fasterxml.jackson.core", "jackson-databind", jacksonVersion),
                 mavenBundle("com.fasterxml.jackson.core", "jackson-annotations", jacksonVersion),
-                mavenBundle("de.undercouch", "bson4jackson", bson4Jackson),
-                mavenBundle("org.mongodb", "mongo-java-driver", System.getProperty("mongo.version")),
+                mavenBundle("de.undercouch", "bson4jackson", bson4JacksonVersion),
                 junitBundles()
         };
     }
