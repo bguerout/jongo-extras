@@ -20,6 +20,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.jongo.AnnotationsMisusedTest;
 import org.jongo.BinaryTest;
 import org.jongo.NonPojoTest;
+import org.jongo.marshall.DocumentMarshallingTest;
 import org.jongo.marshall.jackson.ParameterBindingWithJacksonTest;
 import org.jongo.marshall.jackson.configuration.Mapping;
 import org.jongo.marshall.jackson.configuration.PropertyModifier;
@@ -46,6 +47,7 @@ public class JsonMapperCompatibilitySuiteTest {
         context.ignoreTestCase(BinaryTest.class);
         context.ignoreTestCase(NonPojoTest.class);
         context.ignoreTest(AnnotationsMisusedTest.class, "savingAPojoWithAnEmptyStringCustomId");
+        context.ignoreTest(DocumentMarshallingTest.class, "canHandleDecimal128");
 
         //JsonEngine does not support primitive marshalled as Document
         context.ignoreTest(ParameterBindingWithJacksonTest.class, "canBindStringWithJsonValue");
